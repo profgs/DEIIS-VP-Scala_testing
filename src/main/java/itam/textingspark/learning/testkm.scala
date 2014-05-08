@@ -1,11 +1,11 @@
-package itam.textingspark.spark_testing
+package itam.textingspark.learning
 
 import org.apache.spark.mllib.clustering.KMeans
 import org.apache.spark.SparkContext
-import SparkContext._
-import org.apache.spark.rdd.RDD
+import org.apache.spark.SparkContext._
 import org.apache.spark.mllib.clustering.KMeansModel
 import java.io._
+import scala.Array.canBuildFrom
 
 
 
@@ -51,30 +51,23 @@ class testkm {
 		kmObjOut.writeObject(kmModel)
 		kmObjOut.close()
 
-		/*
+	
 		val kmIn: FileInputStream = new FileInputStream("data/kmeans_model.obj")
 		val kmObjIn: ObjectInputStream = new ObjectInputStream(kmIn)
-		kmObjIn.readObject()
-		*/
 		
-		val kmObject = sc.objectFile("data/kmeans_model.obj")
+		
+		//val kmObject = sc.objectFile("data/kmeans_model.obj")
+		
+		val kmModel2:KMeansModel = kmObjIn.readObject().asInstanceOf[KMeansModel]
+
 		
 		val data2 = sc.textFile("data/testeg.sift")
 		val parsedData2 = data2.map(_.split(',').map(_.toDouble))
 		
-
-		//val kmModel2:KMeansModel = kmObject.asInstanceOf[KMeansModel]
-
-		//val kmModel2:KMeansModel = kmObjIn => [KMeansModel]
-		
-		//val kmModel2 = kmObject.
-		
-//		val predData2 = parsedData2.map(x=>kmModel2.predict(x))
-//		predData2.saveAsTextFile("data/vw2")
-
-
+		val predData2 = parsedData2.map(x=>kmModel2.predict(x))
+		predData2.saveAsTextFile("data/vw2")
 		  
-		//kmObjOut.close()
+		kmObjOut.close()
 		
 
 		sc.stop();

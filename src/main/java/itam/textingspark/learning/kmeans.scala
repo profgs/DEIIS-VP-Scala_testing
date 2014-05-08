@@ -1,8 +1,9 @@
-package itam.textingspark.spark_testing
+package itam.textingspark.learning
 
 import org.apache.spark.mllib.clustering.KMeans
 import org.apache.spark.SparkContext
-import SparkContext._
+import org.apache.spark.SparkContext._
+import scala.Array.canBuildFrom
 
 	
 
